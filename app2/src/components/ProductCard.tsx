@@ -1,14 +1,29 @@
 import { Text, Flex, Image, Box, Fade, Button, Center } from "@chakra-ui/react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Heart } from "../Icons";
 
-type ProductCardProps = {
+export interface ProductsType {
+  id: string;
   title: string;
   price: string;
+  category: string;
+  description: string;
   image: string;
-};
+}
 
-const ProductCard = ({ title, price, image }: ProductCardProps) => {
+export interface ProductCardProps extends ProductsType {
+  isFavorite: boolean;
+  addFavorite: (id: string, isFavorite: boolean) => ProductsType[];
+}
+
+const ProductCard = ({
+  title,
+  price,
+  image,
+  id,
+  isFavorite = false,
+  addFavorite,
+}: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   return (
     <Box
@@ -35,7 +50,12 @@ const ProductCard = ({ title, price, image }: ProductCardProps) => {
             path: { strokeWidth: "0px" },
             cursor: "pointer",
           },
+          svg: {
+            fill: isFavorite && "red",
+            path: { strokeWidth: isFavorite && "0px" },
+          },
         }}
+        onClick={() => addFavorite(id, isFavorite)}
         zIndex={2000}
       >
         <Heart />
