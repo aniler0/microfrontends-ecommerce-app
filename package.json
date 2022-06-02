@@ -1,0 +1,34 @@
+{
+  "name": "microfrontends-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "app1",
+      "app2",
+      "container"
+    ]
+  },
+  "scripts": {
+    "start": "lerna run --parallel start",
+    "build": "lerna run build",
+    "serve": "lerna run --parallel serve",
+    "clean": "lerna run --parallel clean",
+    "prepare": "lerna run yarn"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aniler0/microfrontends-ecommerce-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aniler0/microfrontends-ecommerce-app/issues"
+  },
+  "homepage": "https://github.com/aniler0/microfrontends-ecommerce-app#readme",
+  "devDependencies": {
+    "lerna": "^5.0.0"
+  }
+}
