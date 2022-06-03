@@ -1,10 +1,10 @@
 export interface ProductsType {
   id: number;
   title: string;
-  price: string;
+  price: number;
   category: string;
   description: string;
   image: string;
   isFavorite?: boolean;
-  quantity?: number;
+  quantity?: number | undefined;
 }

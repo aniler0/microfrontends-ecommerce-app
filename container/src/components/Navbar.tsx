@@ -5,9 +5,11 @@ import PopoverMenu from "./PopoverMenu";
 
 interface NavbarProps {
   data: ProductsType[];
+  decreaseProduct: (id: number, quantity: number) => void;
+  increaseProduct: (id: number, quantity: number) => void;
 }
 
-const Navbar = ({ data }: NavbarProps) => {
+const Navbar = ({ data, decreaseProduct, increaseProduct }: NavbarProps) => {
   return (
     <Center
       width="100%"
@@ -22,12 +24,21 @@ const Navbar = ({ data }: NavbarProps) => {
         <Text>E-Market</Text>
         <Flex direction="row" align="center" w="80px" justify="space-between">
           <PopoverMenu
+            decreaseProduct={decreaseProduct}
+            increaseProduct={increaseProduct}
             type="favorites"
             header="Favorites"
             icon={<Heart />}
             data={data}
           />
-          <PopoverMenu type="cart" header="Cart" icon={<Cart />} data={data} />
+          <PopoverMenu
+            decreaseProduct={decreaseProduct}
+            increaseProduct={increaseProduct}
+            type="cart"
+            header="Cart"
+            icon={<Cart />}
+            data={data}
+          />
         </Flex>
       </Center>
     </Center>

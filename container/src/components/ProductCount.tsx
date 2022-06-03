@@ -1,13 +1,12 @@
 import { AddIcon, MinusIcon, DeleteIcon } from "@chakra-ui/icons";
 import { Center, Flex, IconButton, Text } from "@chakra-ui/react";
-import { useEffect } from "react";
 
 interface ProductCountProps {
   increaseProduct: (id: number, quantity: number) => void;
   decreaseProduct: (id: number, quantity: number) => void;
   quantity: number;
   id: number;
-  onToggle: () => void;
+  onToggle?: () => void;
 }
 
 const ProductCount = ({
@@ -15,14 +14,7 @@ const ProductCount = ({
   increaseProduct,
   quantity,
   id,
-  onToggle,
 }: ProductCountProps) => {
-  useEffect(() => {
-    if (quantity === 0) {
-      onToggle();
-    }
-  }, [onToggle, quantity]);
-
   return (
     <Center>
       <Flex borderRadius="sm">
@@ -49,7 +41,9 @@ const ProductCount = ({
         </Center>
         <IconButton
           borderLeftRadius="0"
-          onClick={() => increaseProduct(id, quantity)}
+          onClick={() =>
+            increaseProduct !== undefined && increaseProduct(id, quantity)
+          }
           aria-label="plus"
           colorScheme="blue"
           size="sm"

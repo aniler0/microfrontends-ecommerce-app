@@ -1,16 +1,14 @@
-import { lazy, Suspense, useState } from "react";
-import { Center, SimpleGrid, useDisclosure } from "@chakra-ui/react";
+import { lazy, Suspense } from "react";
+import { Center, SimpleGrid } from "@chakra-ui/react";
 import Navbar from "./components/Navbar";
 import useFetchProducts from "./hooks/useFetchProducts";
 import { Skeleton } from "./constants/Skeleton";
 import SkeletonLoading from "./components/Skeleton";
-import { ProductsType } from "./types/productsType";
 
 const ProductCard = lazy(() => import("app2/ProductCard"));
 
 const App = () => {
   const { isLoading, data, setData } = useFetchProducts();
-  const [cart, setCart] = useState<ProductsType[]>([]);
 
   const addFavorite = (id: string, isFavorite: boolean) => {
     setData(
@@ -21,6 +19,7 @@ const App = () => {
   };
 
   const increaseProduct = (id: number, quantity: number) => {
+    console.log(quantity);
     setData(
       data.map((item) =>
         item.id === id ? { ...item, quantity: quantity + 1 } : item
@@ -41,7 +40,11 @@ const App = () => {
 
   return (
     <>
-      <Navbar data={data} />
+      <Navbar
+        data={data}
+        decreaseProduct={decreaseProduct}
+        increaseProduct={increaseProduct}
+      />
       <Center backgroundColor="#ffffff" margin="0" p="4em" marginTop="50px">
         <SimpleGrid columns={[1, 2, 5]} spacing={3} w="80%" alignItems="center">
           {!isLoading && data.length !== 0
