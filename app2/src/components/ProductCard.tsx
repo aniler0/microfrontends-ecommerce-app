@@ -49,7 +49,7 @@ const ProductCard = ({
       borderRadius="1rem"
       overflow="hidden"
       w="200px"
-      p="2rem"
+      p="2.8rem 1rem"
       height="350px"
       maxHeight="500px"
       position="relative"
@@ -100,47 +100,33 @@ const ProductCard = ({
           </Text>
         </Box>
       </Flex>
-      <Fade in={isHovered}>
-        <Box
-          color="white"
-          backdropFilter="auto"
-          backdropBlur="8px"
-          position="absolute"
-          top="0"
-          bottom="0"
-          left="0"
-          w="100%"
-        >
-          <Center height="100%">
-            <Flex direction="column" height="40%" justify="space-around">
-              {!isOpen && (
-                <Button
-                  colorScheme="blue"
-                  size="md"
-                  fontWeight="light"
-                  fontSize="sm"
-                  onClick={() => {
-                    onToggle();
-                    increaseProduct(id, quantity);
-                  }}
-                  transition="all 3s ease-in-out"
-                >
-                  Add to Cart
-                </Button>
-              )}
-              <ScaleFade initialScale={0.7} in={isOpen}>
-                <ProductCount
-                  quantity={quantity}
-                  id={id}
-                  onToggle={onToggle}
-                  decreaseProduct={() => decreaseProduct(id, quantity)}
-                  increaseProduct={() => increaseProduct(id, quantity)}
-                />
-              </ScaleFade>
-            </Flex>
-          </Center>
-        </Box>
-      </Fade>
+
+      <Center>
+        {!isOpen ? (
+          <Button
+            colorScheme="blue"
+            size="sm"
+            fontWeight="light"
+            fontSize="sm"
+            onClick={() => {
+              onToggle();
+              increaseProduct(id, quantity);
+            }}
+          >
+            Add to Cart
+          </Button>
+        ) : (
+          <Fade in={isOpen}>
+            <ProductCount
+              quantity={quantity}
+              id={id}
+              onToggle={onToggle}
+              decreaseProduct={() => decreaseProduct(id, quantity)}
+              increaseProduct={() => increaseProduct(id, quantity)}
+            />
+          </Fade>
+        )}
+      </Center>
     </Box>
   );
 };

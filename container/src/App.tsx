@@ -41,7 +41,7 @@ const App = () => {
 
   return (
     <>
-      <Navbar cart={cart} data={data} />
+      <Navbar data={data} />
       <Center backgroundColor="#ffffff" margin="0" p="4em" marginTop="50px">
         <SimpleGrid columns={[1, 2, 5]} spacing={3} w="80%" alignItems="center">
           {!isLoading && data.length !== 0

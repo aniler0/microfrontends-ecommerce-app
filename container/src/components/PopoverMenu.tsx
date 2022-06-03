@@ -22,9 +22,12 @@ interface PopoverMenuProps {
 }
 
 const PopoverMenu = ({ header, data, icon, type }: PopoverMenuProps) => {
- 
   let popoverMenuArray: ProductsType[] | undefined =
-    type === "favorites" ? data?.filter((item) => item.isFavorite) : data;
+    type === "favorites"
+      ? data?.filter((item) => item.isFavorite)
+      : data?.filter(
+          (item) => item.quantity !== undefined && item.quantity > 0
+        );
   return (
     <Popover>
       <PopoverTrigger>

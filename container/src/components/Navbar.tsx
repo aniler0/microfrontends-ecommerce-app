@@ -5,10 +5,9 @@ import PopoverMenu from "./PopoverMenu";
 
 interface NavbarProps {
   data: ProductsType[];
-  cart: ProductsType[];
 }
 
-const Navbar = ({ data, cart }: NavbarProps) => {
+const Navbar = ({ data }: NavbarProps) => {
   return (
     <Center
       width="100%"
@@ -28,7 +27,7 @@ const Navbar = ({ data, cart }: NavbarProps) => {
             icon={<Heart />}
             data={data}
           />
-          <PopoverMenu type="cart" header="Cart" icon={<Cart />} data={cart} />
+          <PopoverMenu type="cart" header="Cart" icon={<Cart />} data={data} />
         </Flex>
       </Center>
     </Center>
