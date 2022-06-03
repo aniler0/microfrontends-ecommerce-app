@@ -1,6 +1,17 @@
-import { Text, Flex, Image, Box, Fade, Button, Center } from "@chakra-ui/react";
+import {
+  Text,
+  Flex,
+  Image,
+  Box,
+  Fade,
+  Button,
+  Center,
+  useDisclosure,
+  ScaleFade,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Heart } from "../Icons";
+import ProductCount from "./ProductCount";
 
 export interface ProductsType {
   id: string;
@@ -24,6 +35,7 @@ const ProductCard = ({
   isFavorite = false,
   addFavorite,
 }: ProductCardProps) => {
+  const { isOpen, onToggle } = useDisclosure();
   const [isHovered, setIsHovered] = useState(false);
   return (
     <Box
@@ -94,14 +106,23 @@ const ProductCard = ({
           w="100%"
         >
           <Center height="100%">
-            <Button
-              colorScheme="blue"
-              size="lg"
-              fontWeight="light"
-              fontSize="sm"
-            >
-              Add to Cart
-            </Button>
+            <Flex direction="column" height="40%" justify="space-around">
+              {!isOpen && (
+                <Button
+                  colorScheme="blue"
+                  size="md"
+                  fontWeight="light"
+                  fontSize="sm"
+                  onClick={onToggle}
+                  transition="all 3s ease-in-out"
+                >
+                  Add to Cart
+                </Button>
+              )}
+              <ScaleFade initialScale={0.1} in={isOpen}>
+                <ProductCount onToggle={onToggle} />
+              </ScaleFade>
+            </Flex>
           </Center>
         </Box>
       </Fade>
