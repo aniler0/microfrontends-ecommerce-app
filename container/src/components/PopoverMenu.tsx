@@ -18,9 +18,13 @@ interface PopoverMenuProps {
   header: string;
   data: ProductsType[] | undefined;
   icon?: JSX.Element;
+  type: "favorites" | "cart";
 }
 
-const PopoverMenu = ({ header, data, icon }: PopoverMenuProps) => {
+const PopoverMenu = ({ header, data, icon, type }: PopoverMenuProps) => {
+ 
+  let popoverMenuArray: ProductsType[] | undefined =
+    type === "favorites" ? data?.filter((item) => item.isFavorite) : data;
   return (
     <Popover>
       <PopoverTrigger>
@@ -31,29 +35,28 @@ const PopoverMenu = ({ header, data, icon }: PopoverMenuProps) => {
         <PopoverCloseButton />
         <PopoverHeader fontWeight="bold">{header}</PopoverHeader>
         <PopoverBody>
-          {data?.find((elm) => elm.isFavorite)
-            ? data?.map(
-                (product, key) =>
-                  product.isFavorite && (
-                    <Center key={key} p="1em">
-                      <Flex
-                        direction="row"
-                        align="center"
-                        justify="space-between"
-                        w="85%"
-                      >
-                        <Image w="50px" h="50px" src={product.image} />
-                        <Flex align="flex-start" direction="column" w="80%">
-                          <Text fontSize="small">{product.title}</Text>
-                          <Text fontSize="small" fontWeight="bold">
-                            ${product.price}
-                          </Text>
-                        </Flex>
-                      </Flex>
-                    </Center>
-                  )
-              )
-            : "There is no item"}
+          {popoverMenuArray !== undefined && popoverMenuArray.length !== 0
+            ? popoverMenuArray?.map((product, key) => (
+                <Center key={key} p="1em">
+                  <Flex
+                    direction="row"
+                    align="center"
+                    justify="space-between"
+                    w="85%"
+                  >
+                    <Image w="50px" h="50px" src={product.image} />
+                    <Flex align="flex-start" direction="column" w="80%">
+                      <Text fontSize="small">{product.title}</Text>
+                      <Text fontSize="small" fontWeight="bold">
+                        ${product.price}
+                      </Text>
+                    </Flex>
+                  </Flex>
+                </Center>
+              ))
+            : type === "favorites"
+            ? "There is no favorite products"
+            : "Cart is empty"}
         </PopoverBody>
       </PopoverContent>
     </Popover>

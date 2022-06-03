@@ -6,4 +6,5 @@ export interface ProductsType {
   description: string;
   image: string;
   isFavorite?: boolean;
+  quantity?: number;
 }
