@@ -1,24 +1,21 @@
 import { AddIcon, MinusIcon, DeleteIcon } from "@chakra-ui/icons";
-import { Button, Center, Flex, IconButton, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { Center, Flex, IconButton, Text } from "@chakra-ui/react";
 
 interface ProductCountProps {
+  increaseProduct: (id: number, quantity: number) => void;
+  decreaseProduct: (id: number, quantity: number) => void;
+  quantity: number;
+  id: number;
   onToggle: () => void;
 }
 
-const ProductCount = ({ onToggle }: ProductCountProps) => {
-  const [count, setCount] = useState(1);
-  const increaseProduct = () => {
-    setCount(count + 1);
-  };
-  const decreaseProduct = () => {
-    if (count > 1) {
-      setCount(count - 1);
-    } else if (count === 1) {
-      setCount(1);
-      onToggle();
-    }
-  };
+const ProductCount = ({
+  decreaseProduct,
+  increaseProduct,
+  quantity,
+  id,
+  onToggle,
+}: ProductCountProps) => {
   return (
     <Center>
       <Flex borderRadius="sm">
@@ -27,19 +24,26 @@ const ProductCount = ({ onToggle }: ProductCountProps) => {
           aria-label="plus"
           colorScheme="blue"
           size="sm"
-          onClick={decreaseProduct}
+          onClick={() => {
+            decreaseProduct(id, quantity);
+            quantity === 1 && onToggle();
+          }}
           icon={
-            count === 1 ? <DeleteIcon w={3} h={3} /> : <MinusIcon w={3} h={3} />
+            quantity === 1 ? (
+              <DeleteIcon w={3} h={3} />
+            ) : (
+              <MinusIcon w={3} h={3} />
+            )
           }
         />
         <Center w="32px" h="32px" backgroundColor="white">
           <Text color="black" fontSize="sm" fontWeight="bold">
-            {count}
+            {quantity}
           </Text>
         </Center>
         <IconButton
           borderLeftRadius="0"
-          onClick={increaseProduct}
+          onClick={() => increaseProduct(id, quantity)}
           aria-label="plus"
           colorScheme="blue"
           size="sm"

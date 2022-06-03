@@ -6,15 +6,15 @@ import {
   Fade,
   Button,
   Center,
-  useDisclosure,
   ScaleFade,
+  useDisclosure,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Heart } from "../Icons";
 import ProductCount from "./ProductCount";
 
 export interface ProductsType {
-  id: string;
+  id: number;
   title: string;
   price: string;
   category: string;
@@ -24,7 +24,10 @@ export interface ProductsType {
 
 export interface ProductCardProps extends ProductsType {
   isFavorite: boolean;
-  addFavorite: (id: string, isFavorite: boolean) => ProductsType[];
+  addFavorite: (id: number, isFavorite: boolean) => ProductsType[];
+  increaseProduct: (id: number, quantity: number) => void;
+  decreaseProduct: (id: number, quantity: number) => void;
+  quantity: number;
 }
 
 const ProductCard = ({
@@ -34,9 +37,12 @@ const ProductCard = ({
   id,
   isFavorite = false,
   addFavorite,
+  increaseProduct,
+  decreaseProduct,
+  quantity = 0,
 }: ProductCardProps) => {
-  const { isOpen, onToggle } = useDisclosure();
   const [isHovered, setIsHovered] = useState(false);
+  const { isOpen, onToggle } = useDisclosure();
   return (
     <Box
       maxW="sm"
@@ -113,14 +119,23 @@ const ProductCard = ({
                   size="md"
                   fontWeight="light"
                   fontSize="sm"
-                  onClick={onToggle}
+                  onClick={() => {
+                    onToggle();
+                    increaseProduct(id, quantity);
+                  }}
                   transition="all 3s ease-in-out"
                 >
                   Add to Cart
                 </Button>
               )}
-              <ScaleFade initialScale={0.1} in={isOpen}>
-                <ProductCount onToggle={onToggle} />
+              <ScaleFade initialScale={0.7} in={isOpen}>
+                <ProductCount
+                  quantity={quantity}
+                  id={id}
+                  onToggle={onToggle}
+                  decreaseProduct={() => decreaseProduct(id, quantity)}
+                  increaseProduct={() => increaseProduct(id, quantity)}
+                />
               </ScaleFade>
             </Flex>
           </Center>
