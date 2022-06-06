@@ -126,7 +126,7 @@ const PopoverMenu = ({
         >
           {type === "cart" && (
             <Text fontSize="sm" fontWeight="bold">
-              Total: ${cost}
+              Total: ${cost.toFixed(2)}
             </Text>
           )}
         </PopoverFooter>
