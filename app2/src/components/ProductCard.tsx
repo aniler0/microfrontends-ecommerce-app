@@ -10,23 +10,23 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Heart } from "../Icons";
-import ProductCount from "./ProductCount";
+import ProductAdd from "./ProductAdd";
 
 export interface ProductsType {
   id: number;
   title: string;
-  price: string;
+  price: number;
   category: string;
   description: string;
   image: string;
+  isFavorite: boolean;
+  quantity: number;
 }
 
 export interface ProductCardProps extends ProductsType {
-  isFavorite: boolean;
-  addFavorite: (id: number, isFavorite: boolean) => ProductsType[];
+  setFavorite: (id: number, isFavorite: boolean) => void;
   increaseProduct: (id: number, quantity: number) => void;
   decreaseProduct: (id: number, quantity: number) => void;
-  quantity: number;
 }
 
 const ProductCard = ({
@@ -35,7 +35,7 @@ const ProductCard = ({
   image,
   id,
   isFavorite = false,
-  addFavorite,
+  setFavorite,
   increaseProduct,
   decreaseProduct,
   quantity = 0,
@@ -72,7 +72,7 @@ const ProductCard = ({
             path: { strokeWidth: isFavorite && "0px" },
           },
         }}
-        onClick={() => addFavorite(id, isFavorite)}
+        onClick={() => setFavorite(id, isFavorite)}
         zIndex={2000}
       >
         <Heart />
@@ -116,7 +116,7 @@ const ProductCard = ({
           </Button>
         ) : (
           <Fade in={isOpen}>
-            <ProductCount
+            <ProductAdd
               quantity={quantity}
               id={id}
               onToggle={onToggle}

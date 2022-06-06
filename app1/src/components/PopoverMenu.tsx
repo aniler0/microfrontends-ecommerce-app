@@ -13,9 +13,9 @@ import {
   PopoverTrigger,
   Text,
 } from "@chakra-ui/react";
+import { ProductsType } from "./Navbar";
 import { useEffect, useState } from "react";
-import { ProductsType } from "../types/productsType";
-import ProductCount from "./ProductCount";
+import ProductAdd from "./ProductAdd";
 
 interface PopoverMenuProps {
   header: string;
@@ -103,7 +103,7 @@ const PopoverMenu = ({
                       </Text>
                     </Flex>
                     {product.quantity && (
-                      <ProductCount
+                      <ProductAdd
                         id={product.id}
                         quantity={product.quantity}
                         increaseProduct={increaseProduct}

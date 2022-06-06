@@ -1,7 +1,17 @@
 import { Center, Flex, Text } from "@chakra-ui/react";
 import { Cart, Heart } from "../Icons";
-import { ProductsType } from "../types/productsType";
 import PopoverMenu from "./PopoverMenu";
+
+export interface ProductsType {
+  id: number;
+  title: string;
+  price: number;
+  category: string;
+  description: string;
+  image: string;
+  quantity: number;
+  isFavorite: boolean;
+}
 
 interface NavbarProps {
   data: ProductsType[];
