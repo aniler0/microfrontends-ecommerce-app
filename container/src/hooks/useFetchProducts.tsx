@@ -1,9 +1,9 @@
+import { ProductCardType } from "app2/ProductCard";
 import { useEffect, useState } from "react";
 import { getProducts } from "../api/axios";
-import { ProductsType } from "../types/productsType";
 
 const useFetchProducts = () => {
-  const [data, setData] = useState<ProductsType[]>([]);
+  const [data, setData] = useState<ProductCardType[]>([]);
   const [isLoading, setLoading] = useState<boolean>(true);
 
   const fetchData = async () => {
@@ -21,7 +21,7 @@ const useFetchProducts = () => {
     fetchData();
   }, []);
 
-  return { isLoading, data, setData };
+  return { isLoading, data };
 };
 
 export default useFetchProducts;

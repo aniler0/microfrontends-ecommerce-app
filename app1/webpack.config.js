@@ -26,7 +26,7 @@ module.exports = {
       filename: "remoteEntry.js",
       exposes: {
         // expose each component
-        "./CounterAppOne": "./src/components/CounterAppOne",
+        "./Navbar": "./src/components/Navbar",
       },
       shared: {
         ...deps,

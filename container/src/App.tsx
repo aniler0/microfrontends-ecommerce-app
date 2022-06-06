@@ -1,60 +1,62 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Center, SimpleGrid } from "@chakra-ui/react";
-import Navbar from "./components/Navbar";
 import useFetchProducts from "./hooks/useFetchProducts";
 import { Skeleton } from "./constants/Skeleton";
 import SkeletonLoading from "./components/Skeleton";
+import { ProductCardType } from "app2/ProductCard";
 
+const Navbar = lazy(() => import("app1/Navbar"));
 const ProductCard = lazy(() => import("app2/ProductCard"));
 
 const App = () => {
-  const { isLoading, data, setData } = useFetchProducts();
+  const { isLoading, data } = useFetchProducts();
+  const [copiedData, setCopiedData] = useState<ProductCardType[]>([]);
 
-  const addFavorite = (id: string, isFavorite: boolean) => {
-    setData(
-      data.map((item: any) =>
-        item.id === id ? { ...item, isFavorite: !isFavorite } : item
-      )
+  useEffect(() => {
+    setCopiedData(data);
+  }, [data]);
+
+  const setFavorite = (id: number, isFavorite: boolean) => {
+    const newArray = copiedData.map((item: any) =>
+      item.id === id ? { ...item, isFavorite: !isFavorite } : item
     );
+    setCopiedData(newArray);
   };
 
   const increaseProduct = (id: number, quantity: number) => {
-    console.log(quantity);
-    setData(
-      data.map((item) =>
-        item.id === id ? { ...item, quantity: quantity + 1 } : item
-      )
+    const newArray = copiedData.map((item) =>
+      item.id === id ? { ...item, quantity: quantity + 1 } : item
     );
+    setCopiedData(newArray);
   };
   const decreaseProduct = (id: number, quantity: number) => {
-    setData(
-      data.map((item) =>
-        item.id === id
-          ? item.quantity !== undefined && item.quantity > 1
-            ? { ...item, quantity: quantity - 1 }
-            : { ...item, quantity: 0 }
-          : item
-      )
+    const newArray = copiedData.map((item) =>
+      item.id === id
+        ? item.quantity !== undefined && item.quantity > 1
+          ? { ...item, quantity: quantity - 1 }
+          : { ...item, quantity: 0 }
+        : item
     );
+    setCopiedData(newArray);
   };
 
   return (
     <>
       <Navbar
-        data={data}
+        data={copiedData}
         decreaseProduct={decreaseProduct}
         increaseProduct={increaseProduct}
       />
       <Center backgroundColor="#ffffff" margin="0" p="4em" marginTop="50px">
         <SimpleGrid columns={[1, 2, 5]} spacing={3} w="80%" alignItems="center">
-          {!isLoading && data.length !== 0
-            ? data.map((product, key) => (
+          {!isLoading && copiedData.length !== 0
+            ? copiedData.map((product, key) => (
                 <Suspense key={key} fallback={<SkeletonLoading />}>
                   <ProductCard
-                    increaseProduct={increaseProduct}
-                    decreaseProduct={decreaseProduct}
-                    addFavorite={addFavorite}
                     {...product}
+                    setFavorite={setFavorite}
+                    decreaseProduct={decreaseProduct}
+                    increaseProduct={increaseProduct}
                   />
                 </Suspense>
               ))
