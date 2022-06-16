@@ -1,5 +1,4 @@
 import { Center, Flex, Text } from "@chakra-ui/react";
-import { Cart, Heart } from "../Icons";
 import PopoverMenu from "./PopoverMenu";
 
 export interface ProductsType {
@@ -23,22 +22,21 @@ const Navbar = ({ data, decreaseProduct, increaseProduct }: NavbarProps) => {
   return (
     <Center
       width="100%"
-      height="10vh"
+      height="100px"
       bg="white"
       position="fixed"
       top="0"
       zIndex="99999"
       boxShadow="sm"
     >
-      <Center w="100%" h="100%" maxW="1200px" justifyContent="space-between">
+      <Center w="80%" h="100%" justifyContent="space-between">
         <Text>E-Market</Text>
-        <Flex direction="row" align="center" w="80px" justify="space-between">
+        <Flex direction="row" align="center" w="90px" justify="space-between">
           <PopoverMenu
             decreaseProduct={decreaseProduct}
             increaseProduct={increaseProduct}
             type="favorites"
             header="Favorites"
-            icon={<Heart />}
             data={data}
           />
           <PopoverMenu
@@ -46,7 +44,6 @@ const Navbar = ({ data, decreaseProduct, increaseProduct }: NavbarProps) => {
             increaseProduct={increaseProduct}
             type="cart"
             header="Cart"
-            icon={<Cart />}
             data={data}
           />
         </Flex>

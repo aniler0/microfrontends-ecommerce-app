@@ -3,16 +3,14 @@ import {
   Flex,
   IconButton,
   Image,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverFooter,
-  PopoverHeader,
-  PopoverTrigger,
+  Menu,
+  MenuButton,
+  MenuGroup,
+  MenuItem,
+  MenuList,
   Text,
 } from "@chakra-ui/react";
+import { AiOutlineShoppingCart, AiOutlineHeart } from "react-icons/ai";
 import { ProductsType } from "./Navbar";
 import { useEffect, useState } from "react";
 import ProductAdd from "./ProductAdd";
@@ -29,7 +27,6 @@ interface PopoverMenuProps {
 const PopoverMenu = ({
   header,
   data,
-  icon,
   type,
   increaseProduct,
   decreaseProduct,
@@ -54,84 +51,81 @@ const PopoverMenu = ({
   }, [popoverMenuArray, type]);
 
   return (
-    <Popover>
-      <PopoverTrigger>
-        <IconButton
-          isActive={type === "cart"}
-          onClick={() => console.log(type)}
-          aria-label={type}
-          colorScheme="whiteAlpha"
-          icon={icon}
-        />
-      </PopoverTrigger>
-      <PopoverContent w="400px">
-        <PopoverArrow />
-        <PopoverCloseButton />
-        <PopoverHeader fontWeight="bold">{header}</PopoverHeader>
-        <PopoverBody>
+    <Menu>
+      <MenuButton
+        _focus={{ outline: "none" }}
+        as={IconButton}
+        aria-label="Options"
+        icon={type === "cart" ? <AiOutlineShoppingCart /> : <AiOutlineHeart />}
+        variant="outline"
+      />
+      <MenuList p={4}>
+        <MenuGroup fontWeight="bold" title={header} m={0}>
           {popoverMenuArray.length !== 0
             ? popoverMenuArray?.map((product, key) => (
-                <Center key={key} p="1em">
-                  <Flex
-                    direction="row"
-                    align="center"
-                    justify="space-between"
-                    w="85%"
-                  >
-                    <Center position="relative">
-                      <Image w="50px" h="50px" src={product.image} />
-                      {type === "cart" && (
-                        <Center
-                          left={-3}
-                          top={-3}
-                          w={5}
-                          h={5}
-                          bgColor="red.500"
-                          borderRadius="1rem"
-                          position="absolute"
-                        >
-                          <Text color="white" fontSize="sm" fontWeight="bold">
-                            {product.quantity}
-                          </Text>
-                        </Center>
+                <MenuItem closeOnSelect={false} key={key}>
+                  <Center key={key} p="1em" w="100%">
+                    <Flex
+                      direction="row"
+                      align="center"
+                      justify="space-between"
+                      w="100%"
+                    >
+                      <Center position="relative">
+                        <Image w="50px" h="50px" src={product.image} />
+                        {type === "cart" && (
+                          <Center
+                            left={-3}
+                            top={-3}
+                            w={5}
+                            h={5}
+                            bgColor="red.500"
+                            borderRadius="1rem"
+                            position="absolute"
+                          >
+                            <Text color="white" fontSize="sm" fontWeight="bold">
+                              {product.quantity}
+                            </Text>
+                          </Center>
+                        )}
+                      </Center>
+                      <Flex align="flex-start" direction="column" w="80%">
+                        <Text fontSize="small">{product.title}</Text>
+                        <Text fontSize="small" fontWeight="bold">
+                          ${product.price}
+                        </Text>
+                      </Flex>
+                      {product.quantity && type === "cart" && (
+                        <ProductAdd
+                          id={product.id}
+                          quantity={product.quantity}
+                          increaseProduct={increaseProduct}
+                          decreaseProduct={decreaseProduct}
+                        />
                       )}
-                    </Center>
-                    <Flex align="flex-start" direction="column" w="80%">
-                      <Text fontSize="small">{product.title}</Text>
-                      <Text fontSize="small" fontWeight="bold">
-                        ${product.price}
-                      </Text>
                     </Flex>
-                    {product.quantity && (
-                      <ProductAdd
-                        id={product.id}
-                        quantity={product.quantity}
-                        increaseProduct={increaseProduct}
-                        decreaseProduct={decreaseProduct}
-                      />
-                    )}
-                  </Flex>
-                </Center>
+                  </Center>
+                </MenuItem>
               ))
             : type === "favorites"
             ? "There is no favorite products"
             : "Cart is empty"}
-        </PopoverBody>
-        <PopoverFooter
-          border="0"
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          pb={4}
-        >
-          {type === "cart" && (
+        </MenuGroup>
+        {type === "cart" && (
+          <MenuGroup
+            border="0"
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            pb={4}
+          >
             <Text fontSize="sm" fontWeight="bold">
               Total: ${cost.toFixed(2)}
             </Text>
-          )}
-        </PopoverFooter>
-      </PopoverContent>
-    </Popover>
+          </MenuGroup>
+        )}
+      </MenuList>
+    </Menu>
   );
 };
 

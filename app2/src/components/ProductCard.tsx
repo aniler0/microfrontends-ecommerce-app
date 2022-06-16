@@ -56,6 +56,7 @@ const ProductCard = ({
       backgroundColor="#fff"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      margin="auto"
     >
       <Box
         top={3}
