@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const deps = require("./package.json").dependencies;
 
@@ -7,17 +8,35 @@ module.exports = {
   mode: process.env.NODE_ENV || "development",
   devServer: {
     port: 3000,
-    hot: true,
+    open: true,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
   },
+
   module: {
     rules: [
       {
         test: /\.(js|jsx|tsx|ts)$/,
-        loader: "ts-loader",
         exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: [
+              "@babel/preset-env",
+              "@babel/preset-typescript",
+              ["@babel/preset-react", { runtime: "automatic" }],
+            ],
+
+            plugins: [
+              "react-hot-loader/babel",
+              ["@babel/plugin-proposal-class-properties", { loose: true }],
+            ],
+          },
+        },
       },
     ],
   },
@@ -42,5 +61,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
+    new ForkTsCheckerWebpackPlugin(),
   ],
 };
