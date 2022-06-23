@@ -1,4 +1,5 @@
 import {
+  Box,
   Center,
   Flex,
   IconButton,
@@ -63,7 +64,7 @@ const PopoverMenu = ({
         <MenuGroup fontWeight="bold" title={header} m={0}>
           {popoverMenuArray.length !== 0
             ? popoverMenuArray?.map((product, key) => (
-                <MenuItem closeOnSelect={false} key={key}>
+                <Box key={key}>
                   <Center key={key} p="1em" w="100%">
                     <Flex
                       direction="row"
@@ -105,7 +106,7 @@ const PopoverMenu = ({
                       )}
                     </Flex>
                   </Center>
-                </MenuItem>
+                </Box>
               ))
             : type === "favorites"
             ? "There is no favorite products"

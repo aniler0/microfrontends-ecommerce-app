@@ -7,6 +7,9 @@ module.exports = {
   mode: "development",
   devServer: {
     port: 3002,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
