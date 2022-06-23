@@ -30,8 +30,5 @@
   "homepage": "https://github.com/aniler0/microfrontends-ecommerce-app#readme",
   "devDependencies": {
     "lerna": "^5.0.0"
-  },
-  "dependencies": {
-    "react-icons": "^4.4.0"
   }
 }
