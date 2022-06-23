@@ -57,7 +57,6 @@ const App = () => {
           templateColumns={getTemplate}
           columns={[1, 2, 5]}
           spacing={3}
-          w="80%"
           alignItems="center"
         >
           {!isLoading && copiedData.length !== 0

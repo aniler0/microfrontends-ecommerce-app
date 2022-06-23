@@ -8,8 +8,8 @@ import {
   Center,
   useDisclosure,
 } from "@chakra-ui/react";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useState } from "react";
-import { Heart } from "../Icons";
 import ProductAdd from "./ProductAdd";
 
 export interface ProductsType {
@@ -76,7 +76,7 @@ const ProductCard = ({
         onClick={() => setFavorite(id, isFavorite)}
         zIndex={2000}
       >
-        <Heart />
+        {isFavorite ? <AiFillHeart size={20} /> : <AiOutlineHeart size={20} />}
       </Box>
       <Flex
         color="#000"

@@ -7,7 +7,6 @@ import {
   Menu,
   MenuButton,
   MenuGroup,
-  MenuItem,
   MenuList,
   Text,
 } from "@chakra-ui/react";

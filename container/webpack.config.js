@@ -25,6 +25,8 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
+            cacheDirectory: true,
+            babelrc: false,
             presets: [
               "@babel/preset-env",
               "@babel/preset-typescript",
