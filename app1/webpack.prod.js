@@ -4,13 +4,7 @@ const deps = require("./package.json").dependencies;
 
 module.exports = {
   entry: "./src/index.ts",
-  mode: "development",
-  devServer: {
-    port: 3002,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-    },
-  },
+  mode: "production",
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
   },
@@ -25,11 +19,11 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "app2",
+      name: "app1",
       filename: "remoteEntry.js",
       exposes: {
         // expose each component
-        "./ProductCard": "./src/components/ProductCard",
+        "./Navbar": "./src/components/Navbar",
       },
       shared: {
         ...deps,

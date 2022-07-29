@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from "react";
-import { Center, SimpleGrid } from "@chakra-ui/react";
+import { Center, SimpleGrid, useBreakpointValue } from "@chakra-ui/react";
 import useFetchProducts from "./hooks/useFetchProducts";
 import { Skeleton } from "./constants/Skeleton";
 import SkeletonLoading from "./components/Skeleton";
@@ -16,6 +16,11 @@ const App = () => {
     setCopiedData(data);
   }, [data]);
 
+  const getTemplate = useBreakpointValue({
+    base: "repeat(1,1fr)",
+    md: "repeat(3,1fr)",
+    lg: "repeat(5,1fr)",
+  });
   const setFavorite = (id: number, isFavorite: boolean) => {
     const newArray = copiedData.map((item: any) =>
       item.id === id ? { ...item, isFavorite: !isFavorite } : item
@@ -48,7 +53,12 @@ const App = () => {
         increaseProduct={increaseProduct}
       />
       <Center backgroundColor="#ffffff" margin="0" p="4em" marginTop="50px">
-        <SimpleGrid columns={[1, 2, 5]} spacing={3} w="80%" alignItems="center">
+        <SimpleGrid
+          templateColumns={getTemplate}
+          columns={[1, 2, 5]}
+          spacing={3}
+          alignItems="center"
+        >
           {!isLoading && copiedData.length !== 0
             ? copiedData.map((product, key) => (
                 <Suspense key={key} fallback={<SkeletonLoading />}>

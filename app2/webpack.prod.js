@@ -4,13 +4,7 @@ const deps = require("./package.json").dependencies;
 
 module.exports = {
   entry: "./src/index.ts",
-  mode: "development",
-  devServer: {
-    port: 3002,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-    },
-  },
+  mode: "production",
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
   },
